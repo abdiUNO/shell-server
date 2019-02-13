@@ -4,14 +4,14 @@ import * as pty from 'pty.js';
 const app = express();
 const expressWs = require('express-ws')(app);
 
-// Serve static assets from ./static
-app.use(express.static(`${__dirname}/static`));
+console.log("Starting server")
 
 // Instantiate shell and set up data handlers
 expressWs.app.ws('/shell', (ws, req) => {
+  console.log("GET: /shell")
   // Spawn the shell
   // Compliments of http://krasimirtsonev.com/blog/article/meet-evala-your-terminal-in-the-browser-extension
-  const shell = pty.spawn('/bin/bash', [], {
+  const shell = pty.spawn('bash', [], {
     name: 'xterm-color',
     cwd: process.env.PWD,
     env: process.env
@@ -28,3 +28,5 @@ expressWs.app.ws('/shell', (ws, req) => {
 
 // Start the application
 app.listen(3000);
+
+console.log("Running server on port 3000")
